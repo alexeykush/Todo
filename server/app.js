@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const usersRoute = require("./routes/api/users");
 const notesRoute = require("./routes/api/notes");
+const listsRoute = require("./routes/api/lists");
 
 const port = process.env.PORT || 80;
 
@@ -25,6 +26,7 @@ mongoose
 
 app.use('/api/users',usersRoute);
 app.use('/api/notes',notesRoute);
+app.use('/api/lists',listsRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on ${port}`);

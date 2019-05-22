@@ -5,7 +5,7 @@ const NoteListSchema = new Schema({
     title: {
         type: String
     },
-    items: [
+    lists: [
         {
             text: {
                 type: String,

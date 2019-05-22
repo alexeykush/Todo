@@ -49,12 +49,13 @@ router.get("/:id", passport.authenticate("jwt", {session: false}), (req, res) =>
 });
 
 router.put("/:id", passport.authenticate("jwt", {session: false}), (req, res) => {
+    const { text, title } = req.body;
     const newData = {};
-    if (req.body.title) {
-        newData.title = req.body.title
+    if (title) {
+        newData.title = title
     }
-    if (req.body.text) {
-        newData.text = req.body.text
+    if (text) {
+        newData.text = text
     }
 
     if(!Object.keys(newData).length){
