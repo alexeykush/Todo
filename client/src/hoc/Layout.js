@@ -7,7 +7,9 @@ const Layout = ({children}) => {
     return (
         <>
             <Header />
-            {children}
+            <div className="page-container" style={{paddingTop: "56px"}}>
+                {children}
+            </div>
             <Footer />
         </>
     );
