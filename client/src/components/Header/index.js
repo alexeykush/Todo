@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-
-import "./index.css"
+import {connect} from "react-redux";
 
 class Header extends Component {
     renderLinks() {
@@ -22,18 +21,18 @@ class Header extends Component {
 
         const authLinks = (
             <li className="nav-item">
-                <Link to="/logout" className="nav-link">
+                <a href="#" className="nav-link cursor-pointer">
                     Logout
-                </Link>
+                </a>
             </li>
         );
 
-        return gustLinks;
+        return this.props.auth && this.props.auth.isAuth ? authLinks : gustLinks;
     };
 
     render() {
         return (
-            <header className="position-fixed w-100">
+            <header className="w-100">
                 <nav className="navbar navbar-expand-sm navbar-dark bg-success mb-4">
                     <div className="container">
                         <Link to="/" className="navbar-brand font-weight-bold text-uppercase">Todo</Link>
@@ -53,4 +52,8 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps)(Header);

@@ -53,7 +53,9 @@ UserSchema.methods.generateToken = function () {
     return new Promise((resolve, reject) => {
         const payload = {
             id:this.id,
-            name: this.name
+            name: this.name,
+            lastname: this.lastname,
+            email: this.email
         };
         jwt.sign(payload, process.env.secretOrKey, (err, token) => {
             if (err) reject(err);

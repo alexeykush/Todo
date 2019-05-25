@@ -6,7 +6,6 @@ const login = async (req, res, next) => {
     try{
         const {isValid, errors} = validateLoginInput(req.body);
         if (!isValid) return res.status(400).json({errors});
-
         const user = await User.findOne({email: req.body.email});
         if (!user) {
             errors.email = "Incorrect login";

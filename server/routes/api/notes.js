@@ -50,19 +50,10 @@ router.get("/:id", passport.authenticate("jwt", {session: false}), (req, res) =>
 
 router.put("/:id", passport.authenticate("jwt", {session: false}), (req, res) => {
     const { text, title } = req.body;
-    const newData = {};
-    if (title) {
-        newData.title = title
-    }
-    if (text) {
-        newData.text = text
-    }
+    const newData = { title, text };
 
-    if(!Object.keys(newData).length){
-        return res.status(400).json({ error: "Any data passed to update" })
-    }
     Note
-        .findOneAndUpdate({_id: req.params.id, user: req.user.id}, { ...newData }, { new: true })
+        .findOneAndUpdate({_id: req.params.id, user: req.user.id}, newData, { new: true })
         .then(note => {
             if(!note) return res.status(404).json({ error: "Note not found" });
 
