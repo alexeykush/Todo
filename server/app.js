@@ -21,12 +21,11 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET
 });
 
-// app.use(express.static(path.join(__dirname, "../client/build")));
-// app.use(express.static(__dirname + '/client/build'));
-
+app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(__dirname + '/client/build'));
 app.use(express.static(path.join(__dirname, "client")));
 app.use(express.static(path.join(__dirname, "client", 'build')));
-
+app.use(express.static("client/build"));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -46,7 +45,7 @@ app.use("/api/images", imagesRoute);
 
 
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"))
 });
 
 app.listen(port, () => {
