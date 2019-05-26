@@ -24,7 +24,7 @@ cloudinary.config({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static("client/build"));
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
@@ -40,7 +40,7 @@ app.use("/api/images", imagesRoute);
 
 
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"))
 });
 
 app.listen(port, () => {
