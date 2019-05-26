@@ -21,10 +21,13 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET
 });
 
+// app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(__dirname + '/client/build'));
+
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, "../client/build")));
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
