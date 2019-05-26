@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
+import { logoutUser } from "../../actions/authActions";
+
 class Header extends Component {
     renderLinks() {
         const gustLinks = (
@@ -21,13 +23,19 @@ class Header extends Component {
 
         const authLinks = (
             <li className="nav-item">
-                <a href="#" className="nav-link cursor-pointer">
+                <a href="#" className="nav-link cursor-pointer" onClick={this.handleLogout}>
                     Logout
                 </a>
             </li>
         );
 
         return this.props.auth && this.props.auth.isAuth ? authLinks : gustLinks;
+    };
+
+
+    handleLogout = e => {
+        e.preventDefault();
+        this.props.logoutUser();
     };
 
     render() {
@@ -56,4 +64,8 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = {
+    logoutUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -9,6 +9,10 @@ const NoteSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        publicId: String,
+        url: String
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "users",

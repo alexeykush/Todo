@@ -1,31 +1,20 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 
-import DeleteBtn from "../common/DeleteBtn";
+import DeleteBtn from "../common/Buttons/DeleteBtn";
+import EditBtn from "../common/Buttons/EditBtn";
 
 import {deleteNote} from "../../actions/notesActions";
 
-const Note = ({text, title, _id, deleteNote}) => {
+const Note = ({text, title, _id, deleteNote, image}) => {
     return (
         <div className="card">
+            {image && image.url && <img className="card-img-top" src={image.url} alt="Card image cap" />}
             <div className="card-body">
                 {title && <h5 className="card-title">{title}</h5>}
                 <p className="card-text">{text}</p>
                 <DeleteBtn onClick={() => deleteNote(_id)}/>
-                <Link
-                    to={`note/${_id}`}
-                    style={{
-                        position: "absolute",
-                        top: 6,
-                        right: 30,
-                        fontSize: 16
-                    }}
-                    className="close"
-                >
-                    <span className='fas'
-                    >&#xf044;</span>
-                </Link>
+                <EditBtn linkTo={`note/${_id}`}/>
             </div>
         </div>
     );

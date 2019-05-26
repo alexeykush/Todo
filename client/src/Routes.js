@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import NoteForm from "./components/Note/NoteForm";
+import NoteTodoForm from './components/NoteTodo/NoteTodoForm';
 
 import {setCurrentUser} from "./actions/authActions";
 
@@ -29,7 +30,9 @@ class Routes extends Component {
                         <Route path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>
                         <PrivateRoute path="/note" exact component={NoteForm}/>
-                        <PrivateRoute path="/note/:id" exact component={NoteForm}/>
+                        <PrivateRoute path="/note/:id" component={NoteForm}/>
+                        <PrivateRoute path="/todo" exact component={NoteTodoForm}/>
+                        <PrivateRoute path="/todo/:id" component={NoteTodoForm}/>
                     </Switch>
                 </Layout>
             </Router>

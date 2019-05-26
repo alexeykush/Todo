@@ -8,7 +8,15 @@ import {
     NOTE_LOADING,
     GET_ERRORS,
     NOTES_LOADING,
-    NOTES_TODO_LOADING
+    NOTES_TODO_LOADING,
+    GET_TODO,
+    CLEAR_TODO,
+    TODO_LOADING,
+    GET_NOTE_IMAGE,
+    GET_TODO_IMAGE,
+    IMAGE_LOADING,
+    CLEAR_NOTE_IMAGE,
+    CLEAR_TODO_IMAGE
 } from "./types";
 
 export const getNotes = () => dispatch => {
@@ -78,9 +86,91 @@ export const getNote = id => dispatch => {
         })
 };
 
+export const getTodo = id => dispatch => {
+    dispatch({
+        type:TODO_LOADING
+    });
+    axios
+        .get(`/api/lists/${id}`)
+        .then(res => res.data)
+        .then(data => {
+            dispatch({
+                type: GET_TODO,
+                payload: data.list
+            })
+        })
+        .catch(e => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: e.response.data
+            })
+        })
+};
+
+export const uploadNoteImage = data => dispatch => {
+    const config = {
+        header: {'content-type':'multipart/form-data'}
+    };
+    dispatch(imageLoading());
+    axios
+        .post("/api/images", data, config)
+        .then(res => res.data)
+        .then(data => {
+            dispatch({
+                type: GET_NOTE_IMAGE,
+                payload: data
+            })
+        })
+        .catch(e => console.log(e));
+};
+
+export const uploadTodoImage = data => dispatch => {
+    const config = {
+        header: {'content-type':'multipart/form-data'}
+    };
+    dispatch(imageLoading());
+    axios
+        .post("/api/images", data, config)
+        .then(res => res.data)
+        .then(data => {
+            dispatch({
+                type: GET_TODO_IMAGE,
+                payload: data
+            })
+        })
+        .catch(e => console.log(e));
+};
+
+export const removeNoteImage = id => dispatch => {
+    dispatch(imageLoading());
+    axios
+        .delete(`/api/images/${id}`)
+        .then(() => {
+            dispatch(clearNoteImage())
+        })
+        .catch(e => console.log(e));
+};
+
+export const removeTodoImage = id => dispatch => {
+    dispatch(imageLoading());
+    axios
+        .delete(`/api/images/${id}`)
+        .then(() => {
+            dispatch(clearTodoImage())
+        })
+        .catch(e => console.log(e));
+};
+
 export const addNote = (data, history) => dispatch => {
     axios
         .post("/api/notes", data)
+        .then(() => history.push("/"))
+        .catch(e => console.log(e))
+};
+
+export const addTodo = (data, history) => dispatch => {
+    axios
+        .post("/api/lists", data)
         .then(() => history.push("/"))
         .catch(e => console.log(e))
 };
@@ -92,11 +182,25 @@ export const updateNote = (data, id, history) => dispatch => {
         .catch(e => console.log(e))
 };
 
-export const deleteNote = (id) => dispatch => {
+export const updateTodo = (data, id, history) => dispatch => {
+    axios
+        .put(`/api/lists/${id}`, data)
+        .then(() => history.push("/"))
+        .catch(e => console.log(e))
+};
+
+export const deleteNote = id => dispatch => {
     axios
         .delete(`/api/notes/${id}`)
         .then(() => dispatch(getNotes()))
         .catch(e => console.log(e))
+};
+
+export const deleteTodo = id => dispatch => {
+    axios
+        .delete(`/api/lists/${id}`)
+        .then(() => dispatch(getNotesTodo()))
+        .catch(e => console.log(e));
 };
 
 export const clearNote = () => {
@@ -104,3 +208,21 @@ export const clearNote = () => {
         type: CLEAR_NOTE
     }
 };
+
+export const clearTodo = () => {
+    return {
+        type: CLEAR_TODO
+    }
+};
+
+export const imageLoading = () => ({
+    type: IMAGE_LOADING
+});
+
+export const clearNoteImage = () => ({
+    type: CLEAR_NOTE_IMAGE
+});
+
+export const clearTodoImage = () => ({
+    type: CLEAR_TODO_IMAGE
+});

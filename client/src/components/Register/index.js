@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 
-import TextFieldGroup from "../common/TextFieldGroup";
+import TextFieldGroup from "../common/Form/TextFieldGroup";
 import validateRegister from "../../validation/validateRegister";
 
 import { registerUser } from "../../actions/authActions";

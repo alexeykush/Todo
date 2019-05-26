@@ -17,11 +17,15 @@ const NoteListSchema = new Schema({
             }
         }
     ],
+    image: {
+        publicId: String,
+        url: String
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "users",
         required: true
     }
-}, { timestamps: true });
+}, {timestamps: true});
 
-module.exports = Note = mongoose.model("notelists",NoteListSchema);
+module.exports = Note = mongoose.model("notelists", NoteListSchema);

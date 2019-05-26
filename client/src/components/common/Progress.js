@@ -8,11 +8,11 @@ const styles = {
     color:'#28A745'
 };
 
-const Progress = () => {
+const Progress = ({ addStyles }) => {
     return (
         <CircularProgress
             thickness={7}
-            style={styles}
+            style={{...styles, ...addStyles}}
         />
     );
 };

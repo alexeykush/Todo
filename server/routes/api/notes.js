@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const cloudinary = require('cloudinary');
+const formidable = require('express-formidable');
 
 const Note = require("../../models/Note");
 
 router.post("/", passport.authenticate("jwt", {session: false}), (req, res) => {
-    const { text, title } = req.body;
+    const { text, title, image = {} } = req.body;
     if(!text) return res.status(400).json({ error: "Text field is required" });
 
     const notesData = {
@@ -14,6 +16,10 @@ router.post("/", passport.authenticate("jwt", {session: false}), (req, res) => {
     };
     if (title) {
         notesData.title = title
+    }
+
+    if(Object.keys(image).length){
+        notesData.image = image;
     }
 
     const note = new Note({
@@ -49,8 +55,8 @@ router.get("/:id", passport.authenticate("jwt", {session: false}), (req, res) =>
 });
 
 router.put("/:id", passport.authenticate("jwt", {session: false}), (req, res) => {
-    const { text, title } = req.body;
-    const newData = { title, text };
+    const { text, title, image = {} } = req.body;
+    const newData = { title, text, image };
 
     Note
         .findOneAndUpdate({_id: req.params.id, user: req.user.id}, newData, { new: true })

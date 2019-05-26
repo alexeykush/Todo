@@ -1,4 +1,4 @@
-import { LOGIN_USER } from "../actions/types";
+import { LOGIN_USER, LOGOUT_USER } from "../actions/types";
 
 import isEmpty from "../validation/isEmpty"
 
@@ -14,6 +14,11 @@ export default function (state = initialState, { type, payload }) {
                 ...state,
                 isAuth: !isEmpty(payload),
                 user: payload
+            };
+        case LOGOUT_USER:
+            return {
+                ...state,
+                ...initialState
             };
         default:
             return state

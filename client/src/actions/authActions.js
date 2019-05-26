@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import { LOGIN_USER, GET_ERRORS } from "./types";
-import { setAuthToken } from "../utils/authTokenHandler";
+import { LOGIN_USER, GET_ERRORS, LOGOUT_USER } from "./types";
+import { setAuthToken, removeAuthToken } from "../utils/authTokenHandler";
 
 export const loginUser = (data, history) => dispatch => {
     axios
@@ -43,5 +43,12 @@ export const registerUser = (userData,history) => dispatch => {
                 payload: err.response.data
             })
         });
+};
 
+export const logoutUser = () => {
+    removeAuthToken();
+    window.localStorage.removeItem("token");
+    return {
+        type: LOGOUT_USER
+    };
 };

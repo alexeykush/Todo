@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 
 import NoteList from "../NoteList";
-import Button from "../common/Button";
+import Button from "../common/Buttons/Button";
 import Progress from "../common/Progress";
 
 import { getNotes, getNotesTodo } from "../../actions/notesActions";
@@ -45,7 +45,7 @@ class HomeAuth extends Component {
         return (
             <section className="mt-5">
                 <div className="container p-2">
-                    <div className="row text-center">
+                    <div className="row text-center mb-2">
                         <div className="col-md-6">
                             <Button linkTo="/note" text="Add Note" classes="btn-success"/>
                         </div>
@@ -53,7 +53,7 @@ class HomeAuth extends Component {
                             <Button linkTo="/todo" text="Add Todo" classes="btn-primary"/>
                         </div>
                     </div>
-                    <NoteList data={this.generateDataToRender()}/>
+                    <NoteList data={this.generateDataToRender()} user={this.props.user}/>
                 </div>
             </section>
         );
@@ -63,7 +63,8 @@ class HomeAuth extends Component {
 const mapStateToProps = state => ({
     notes: state.notes.notes,
     notesTodo: state.notes.notesTodo,
-    loading: state.notes.loading
+    loading: state.notes.loading,
+    user: state.auth.user
 });
 
 const mapDispatchToProps = {

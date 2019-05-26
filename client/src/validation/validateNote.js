@@ -1,6 +1,6 @@
 import isEmpty from "./isEmpty";
 
-const validateLogin = data => {
+const validateNote = data => {
     const errors = {};
 
     const { text = "" } = data;
@@ -16,4 +16,4 @@ const validateLogin = data => {
 };
 
 
-export default validateLogin;
+export default validateNote;
