@@ -26,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(passport.initialize());
 require("./config/passport")(passport);
+app.use(express.static('client/build'));
 
 mongoose
     .connect(process.env.DATABASE, {useNewUrlParser: true})
@@ -39,7 +40,6 @@ app.use("/api/images", imagesRoute);
 
 
 if (process.env.NODE_ENV === 'production') {
-    const path = require('path');
     app.get('/*', (req, res) => {
         res.sendfile(path.resolve(__dirname, '../client', 'build', 'index.html'))
     })
