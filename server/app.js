@@ -22,7 +22,10 @@ cloudinary.config({
 });
 
 // app.use(express.static(path.join(__dirname, "../client/build")));
-app.use(express.static(__dirname + '/client/build'));
+// app.use(express.static(__dirname + '/client/build'));
+
+app.use(express.static(path.join(__dirname, "client")));
+app.use(express.static(path.join(__dirname, "client", 'build')));
 
 
 app.use(cookieParser());
