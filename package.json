@@ -1,6 +1,7 @@
 {
   "name": "Todo",
   "version": "1.0.0",
+  "homepage": "https://todo-step.herokuapp.com/build/",
   "description": "",
   "main": "server/app.js",
   "scripts": {

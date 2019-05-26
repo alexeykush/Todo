@@ -1,7 +1,7 @@
 /.idea
 *.iml
 *.xml
-/build
-/dist
+**/build
+**/dist
 **/node_modules
 .env
