@@ -8,6 +8,7 @@ const middlewares = [thunk];
 
 let store = null;
 
+
 if (window.navigator.userAgent.includes("Chrome") && process.env.NODE_ENV === "development") {
     store = createStore(
         rootReducer,
