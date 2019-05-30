@@ -7,17 +7,21 @@ const NoteList = require("../../models/NoteList");
 const checkLists = require("../../middlewares/checkLists");
 
 router.post("/", [passport.authenticate("jwt", {session: false}), checkLists], (req, res) => {
-    const { items, title, image = {} } = req.body;
+    const { items, title, image } = req.body;
 
     const notesData = {
         lists: items,
-        image,
         user: req.user.id
     };
 
     if (title) {
         notesData.title = title
     }
+
+    if (image) {
+        notesData.title = title
+    }
+
 
 
     const noteList = new NoteList({
@@ -56,10 +60,17 @@ router.put("/:id", [passport.authenticate("jwt", {session: false}), checkLists],
     try{
         const list = await NoteList.findOne({_id: req.params.id, user: req.user.id});
         if(!list) return res.status(404).json({ error: "Note not found" });
-        const { title = "", items, image = {} } = req.body;
-        list.title = title;
-        list.lists = items;
-        list.image = image;
+        const { title = "", items, image } = req.body;
+        if(title) {
+            list.title = title;
+        }
+        if(items) {
+            list.lists = items;
+        }
+        if(image) {
+            list.image = image;
+        }
+
         const doc = await list.save();
         res.status(200).json({ list: doc });
     } catch (e) {
